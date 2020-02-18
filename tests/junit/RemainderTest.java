@@ -7,7 +7,7 @@ package junit;
 import junit.framework.TestCase;
 import pass.Remainder;
 
-public class DivisionTest extends TestCase {
+public class RemainderTest extends TestCase {
 	private Remainder remainder;
 	
 	protected void setUp() throws Exception {
