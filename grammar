@@ -74,6 +74,15 @@ assignmentExpression ::= conditionalAndExpression  // must be a valid lhs
 
 conditionalAndExpression ::= equalityExpression // level 10
                                {LAND equalityExpression}
+                               
+inclusiveOrExpression ::= exclusiveOrExpression // level 9
+							{ (OR) exclusiveOrExpression }
+                               
+exclusiveOrExpression ::= andExpression // level 8
+							{ (XOR) andExpression}                               
+                               
+andExpression ::= equalityExpression // level 7
+					{ (AND) equalityExpression}
 
 equalityExpression ::= relationalExpression  // level 6
                          {EQUAL relationalExpression}
@@ -81,15 +90,19 @@ equalityExpression ::= relationalExpression  // level 6
 relationalExpression ::= additiveExpression       // level 5
                            [(GT | LE) additiveExpression
                            | INSTANCEOF referenceType]
+                           
+shiftExpression ::= additiveExpression // level 4
+						{ (DLT | DGT | TGT) additiveExpression}
 
 additiveExpression ::= multiplicativeExpression // level 3
                          {(PLUS | MINUS) multiplicativeExpression}
 
 multiplicativeExpression ::= unaryExpression       // level 2
-                               {(STAR | DIV | REM) unaryExpression}
+                               {(STAR | DIV | REM | DGT) unaryExpression}
 
 unaryExpression ::= INC unaryExpression  // level 1
                   | MINUS unaryExpression
+                  | PLUS  unaryExpression
                   | simpleUnaryExpression
 
 simpleUnaryExpression ::= LNOT unaryExpression
