@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry exported="true" kind="lib" path="lib/j--.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/spim.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/javacc.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/junit.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/j2h.jar"/>
+</classpath>
