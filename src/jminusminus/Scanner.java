@@ -185,9 +185,27 @@ class Scanner {
                 reportScannerError("Operator & is not supported in j--.");
                 return getNextToken();
             }
+            
+//        case '>':
+//            nextCh();
+//            return new TokenInfo(GT, line);
+            
+        // case for ">", ">>", ">>>"
         case '>':
             nextCh();
-            return new TokenInfo(GT, line);
+            if (ch == '>') { // >>
+            	nextCh();
+            	if (ch == '>') {
+            		nextCh();
+            		return new TokenInfo(TGT, line);
+            		
+            	} else {
+            		return new TokenInfo(DGT, line);
+            	}
+            } else { // >
+            	return new TokenInfo(GT, line);
+            }
+            
         case '<':
             nextCh();
             if (ch == '=') {

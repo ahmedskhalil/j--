@@ -1083,6 +1083,33 @@ public class Parser {
             return lhs;
         }
     }
+    
+    /**
+     * Parse a shift expression.
+     * 
+     * <pre>                        
+     *   shiftExpression ::= additiveExpression // level 4
+     *							{ (DLT | DGT | TGT) additiveExpression}
+     * </pre>
+     * 
+     * @return an AST for a shiftExpression.
+     */
+
+    private JExpression shiftExpression() {
+        int line = scanner.token().line();
+        boolean more = true;
+        JExpression lhs = additiveExpression();
+        while (more) {
+            if (have(DGT)) {
+                lhs = new JRightShiftOp(line, lhs, additiveExpression());
+            } else if (have(TGT)) {
+                // TODO
+            } else {
+                more = false;
+            }
+        }
+        return lhs;
+    }
 
     /**
      * Parse an additive expression.
