@@ -1103,7 +1103,7 @@ public class Parser {
             if (have(DGT)) {
                 lhs = new JRightShiftOp(line, lhs, additiveExpression());
             } else if (have(TGT)) {
-                // TODO lhs = new JLogicalRightShiftOp(line, lhs, additiveExpression());
+                lhs = new JLogicalRightShiftOp(line, lhs, additiveExpression());
             } else {
                 more = false;
             }
