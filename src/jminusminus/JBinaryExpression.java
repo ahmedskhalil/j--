@@ -333,3 +333,28 @@ class JRightShiftOp extends JBinaryExpression {
 	}
 }
 
+/**
+ * The AST node for a logical right shift (>>>) expression.
+ */
+class JLogicalRightShiftOp extends JBinaryExpression {
+	public JLogicalRightShiftOp(int line, JExpression lhs, JExpression rhs) {
+		super(line, ">>>", lhs, rhs);
+	}
+	
+	public JExpression analyze (Context context) {
+		lhs = (JExpression) lhs.analyze(context);
+		rhs = (JExpression) rhs.analyze(context);
+		lhs.type().mustMatchExpected(line(), Type.INT);
+		rhs.type().mustMatchExpected(line(), Type.INT);
+		type = Type.INT;
+		return this;
+	}
+	
+	// java byte code
+	// IUSHR : 124 (Logical)
+	public void codegen(CLEmitter output) {
+		lhs.codegen(output);
+		rhs.codegen(output);
+		output.addNoArgInstruction(IUSHR);
+	}
+}

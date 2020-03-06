@@ -1,4 +1,4 @@
-// File 	: Remainder.java
+// File 	: RightShift.java
 // Created 	: 03.03.2020
 // Author 	: Ahmed Khalil
 

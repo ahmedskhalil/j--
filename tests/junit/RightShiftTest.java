@@ -19,9 +19,10 @@ public class RightShiftTest extends TestCase {
 		super.tearDown();
 	}
 	
+	
 	public void testRightShift() {
 		this.assertEquals(rightshift.rightshift(0,42),0);
 		this.assertEquals(rightshift.rightshift(42,1),21);
-		this.assertEquals(rightshift.rightshift(128,4),32);
+		this.assertEquals(rightshift.rightshift(128,4),8);
 	}
 }
