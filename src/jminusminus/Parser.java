@@ -1104,6 +1104,8 @@ public class Parser {
                 lhs = new JRightShiftOp(line, lhs, additiveExpression());
             } else if (have(TGT)) {
                 lhs = new JLogicalRightShiftOp(line, lhs, additiveExpression());
+            } else if (have(DLT)) {
+                lhs = new JLeftShiftOp(line, lhs, additiveExpression());
             } else {
                 more = false;
             }

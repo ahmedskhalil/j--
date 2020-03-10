@@ -358,3 +358,29 @@ class JLogicalRightShiftOp extends JBinaryExpression {
 		output.addNoArgInstruction(IUSHR);
 	}
 }
+
+/**
+ * The AST node for a left shift (<<) expression.
+ */
+class JLeftShiftOp extends JBinaryExpression {
+	public JLeftShiftOp(int line, JExpression lhs, JExpression rhs) {
+		super(line, "<<", lhs, rhs);
+	}
+	
+	public JExpression analyze (Context context) {
+		lhs = (JExpression) lhs.analyze(context);
+		rhs = (JExpression) rhs.analyze(context);
+		lhs.type().mustMatchExpected(line(), Type.INT);
+		rhs.type().mustMatchExpected(line(), Type.INT);
+		type = Type.INT;
+		return this;
+	}
+	
+	// java byte code
+	// ISHL : 120
+	public void codegen(CLEmitter output) {
+		lhs.codegen(output);
+		rhs.codegen(output);
+		output.addNoArgInstruction(ISHL);
+	}
+}

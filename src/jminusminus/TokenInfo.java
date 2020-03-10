@@ -17,7 +17,7 @@ enum TokenKind {
             "null"), PACKAGE("package"), PRIVATE("private"), PROTECTED(
             "protected"), PUBLIC("public"), RETURN("return"), STATIC("static"), SUPER(
             "super"), THIS("this"), TRUE("true"), VOID("void"), WHILE("while"), PLUS(
-            "+"), ASSIGN("="), DEC("--"), EQUAL("=="), GT(">"), DGT(">>"), TGT(">>>"), INC("++"), LAND(
+            "+"), ASSIGN("="), DEC("--"), EQUAL("=="), DLT("<<"), GT(">"), DGT(">>"), TGT(">>>"), INC("++"), LAND(
             "&&"), LE("<="), LNOT("!"), MINUS("-"), PLUS_ASSIGN("+="), STAR("*"), DIV("/"), REM("%"),LPAREN(
             "("), RPAREN(")"), LCURLY("{"), RCURLY("}"), LBRACK("["), RBRACK(
             "]"), SEMI(";"), COMMA(","), DOT("."), IDENTIFIER("<IDENTIFIER>"), INT_LITERAL(
