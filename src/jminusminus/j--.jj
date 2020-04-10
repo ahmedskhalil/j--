@@ -147,45 +147,107 @@ TOKEN:
 {
   < ABSTRACT: "abstract" >
 | < BOOLEAN: "boolean" >
-| < CHAR: "char" >
 | < CLASS: "class" >
 | < ELSE: "else" >
 | < EXTENDS: "extends" >
-| < FALSE: "false" >
 | < IF: "if" >
+| < FOR: "for">
 | < IMPORT: "import" >
 | < INSTANCEOF: "instanceof" >
 | < INT: "int" >
 | < NEW: "new" >
 | < NULL: "null" >
 | < PACKAGE: "package">
+
+| < DEFLT: "default" >
+| < INTERFACE: "interface" >
 | < PRIVATE: "private" >
 | < PROTECTED: "protected" >
 | < PUBLIC: "public" >
 | < RETURN: "return" >
 | < STATIC: "static" >
+| < TRANSIENT: "transient" >
+| < CONST: "const" >
+| < IMPLEMENTS: "implements" >
+| < STRICT: "strict" >
+| < STRICTFP: "strictfp" >
+| < SYNCHRONIZED: "synchronized" >
+
+| < CHAR: "char" >
+| < BYTE: "byte" >
+| < SHORT: "short" >
+| < FLOAT: "float" >
+| < DOUBLE: "double" >
+| < LONG: "long" >
+
 | < SUPER: "super" >
 | < THIS: "this" >
+
 | < TRUE: "true" >
+| < FALSE: "false" >
 | < VOID: "void" >
 | < WHILE: "while" >
+| < BREAK: "break" >
+| < CONTINUE: "continue" >
+| < DO: "do" >
+| < GOTO: "goto" >
+| < NATIVE: "native" >
+| < VOLATILE: "volatile">
+
+| < SWITCH: "switch" >
+| < CASE: "case" >
+
+| < FINAL: "final">
+| < FINALLY: "finally">
+
+| < TRY: "try" >
+| < CATCH: "catch" >
+
+| <THROW: "throw">
+| <THROWS: "throws">
+
 }
 
 // Operators (these could be combined with the reserved words)
 TOKEN:
 {
-  < PLUS: "+" >
-| < ASSIGN: "=" >
-| < DEC: "--" >
-| < EQUAL: "==" >
-| < GT: ">" >
-| < INC: "++" >
-| < LAND: "&&" >
-| < LE: "<=" >
-| < LNOT: "!" >
-| < MINUS: "-" >
-| < PLUS_ASSIGN: "+=" >
-| < STAR: "*" >
+  < PLUS        : "+" >
+| < UNAPLUS     : "#+" >
+| < PLUS_ASSIGN : "+=" >
+| < MINUS       : "-" >
+| < MINUS_ASSIGN: "-=" >
+| < ASSIGN      : "=" >
+| < DEC         : "--" >
+| < EQUAL       : "==" >
+| < NOTEQ       : "!=" >
+| < GE          : ">=" >
+| < GT          : ">" >
+| < DGT         : ">>" >
+| < DGT_ASSIGN  : ">>=" >
+| < TGT         : ">>>" >
+| < TGT_ASSIGN  : ">>>=" >
+| < INC         : "++" >
+| < LAND        : "&&" >
+| < LOR         : "||">
+| < AND         : "&">
+| < AND_ASSIGN  : "&=">
+| < BNOT        : "~">
+| < BOR         : "|" >
+| < OR_ASSIGN   : "|=" >
+| < XOR         : "^">
+| < XOR_ASSIGN  : "^=" >
+| < LE          : "<=" >
+| < LT          : "<" >
+| < DLT         : "<<" >
+| < DLT_ASSIGN  : "<<=">
+| < LNOT        : "!" >
+| < QUEST       : "?" >
+| < STAR        : "*" >
+| < STAR_ASSIGN : "*=" >
+| < DIV         : "/">
+| < DIV_ASSIGN  : "/=" >
+| < REMAIN      : "%" >
+| < REMAIN_ASSIGN: "%=" >
 }
 
 // Separators (these could be combined with the reserved words)
@@ -198,6 +260,7 @@ TOKEN:
 | < LBRACK: "[" >
 | < RBRACK: "]" >
 | < SEMI: ";" >
+| < COLON: ":" >
 | < COMMA: "," >
 | < DOT: "." >
 }
@@ -212,11 +275,18 @@ TOKEN:
 }
 
 // Literals
-TOKEN:
 {
-  < INT_LITERAL: ("0" | <NON_ZERO_DIGIT> (<DIGIT>)*) >
+  < DIGITS: <DIGIT> (<DIGIT>)* >
+| < INT_LITERAL: ("0" | <NON_ZERO_DIGIT> (<DIGIT>)*) >
 | < CHAR_LITERAL: "'" (<ESC> | ~["'","\\","\n","\r"]) "'" >
-| < STRING_LITERAL: "\"" (<ESC> | ~["\"","\\","\n","\r"])* "\"" >   
+| < STRING_LITERAL: "\"" (<ESC> | ~["\"","\\","\n","\r"])* "\"" >
+| < DOUBLE_SUFFIX: ("D"|"d")>
+| < EXP: ("E"|"e")("-"|"+")* <DIGITS> >                                 // E|e+99
+| < DOUBLE_LITERAL: ( <DOT> <DIGITS>(<EXP>|<DOUBLE_SUFFIX>)*            // .66(e+99|d)*
+                    | <DIGITS> <DOT>(<DIGITS>|<EXP>|<DOUBLE_SUFFIX>)*   // 66.(99|e+99|d)*
+                    | <DIGITS>  <EXP> (<DOUBLE_SUFFIX>)*                // 66e99(d)*
+                    | <DIGITS> (<EXP>)*<DOUBLE_SUFFIX>                  // 66(e99)*d
+                    ) >
 | < #ESC: "\\" ["n","t","b","r","f","\\","'","\""] >
 }
 
