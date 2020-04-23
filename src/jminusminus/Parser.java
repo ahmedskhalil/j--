@@ -1164,7 +1164,7 @@ public class Parser {
             	lhs = new JDivideOp(line, lhs, unaryExpression());
             	
             // expanding for 'REM'
-            } else if (have(REM)) {
+            } else if (have(REMAIN)) {
             	lhs = new JRemainderOp(line, lhs, unaryExpression());
             	
             } else {
