@@ -15,13 +15,13 @@ import static jminusminus.CLConstants.*;
 abstract class JConditionalExpression extends JExpression {
 
     /** Test expression. */
-    private JExpression condition;
+    protected JExpression condition;
 
     /** Then clause. */
-    private JExpression thenPart;
+    protected JExpression thenPart;
 
     /** Else clause. */
-    private JExpression elsePart;
+    protected JExpression elsePart;
 
     /**
      * Construct an AST node for an JConditionalExpression given its
@@ -108,6 +108,35 @@ class JTernaryOp extends JConditionalExpression {
      */
 
     public JExpression analyze(Context context) {
+
+        // based on JIfStatement's analyze,
+        // elsePart and thenPart must coexist
+        // and must be of the same type.
+        condition = (JExpression) condition.analyze(context);
+        condition.type().mustMatchExpected(line(), Type.BOOLEAN);
+
+        thenPart = (JExpression) thenPart.analyze(context);
+        elsePart = (JExpression) elsePart.analyze(context);
+
+        if (thenPart.type().equals(Type.INT) &&
+            elsePart.type().equals(Type.INT)) {
+            type = Type.INT;
+
+        } else if (thenPart.type().equals(Type.DOUBLE) &&
+                elsePart.type().equals(Type.DOUBLE)) {
+            type = Type.DOUBLE;
+
+        } else if (thenPart.type().equals(Type.STRING) &&
+                elsePart.type().equals(Type.STRING)) {
+            type = Type.STRING;
+
+        } else {
+            type = Type.ANY;
+            JAST.compilationUnit.reportSemanticError(line(),
+                    "thenPart with type: " + thenPart.type().toString()
+                            + " doesn't match with elsePart's: "
+                            + elsePart.type().toString());
+        }
 
         return this;
     }
